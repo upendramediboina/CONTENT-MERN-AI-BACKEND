@@ -97,15 +97,11 @@ cron.schedule("0 0 1 * * *", async () => {
 app.use(express.json());
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "https://effervescent-douhua-d7cc71.netlify.app"
-  ],
+// Allow all origins temporarily
+app.use(cors({
+  origin: true,
   credentials: true,
-};
-
-app.use(cors(corsOptions));
+}));
 
 // Root Route
 app.get("/", (req, res) => {
