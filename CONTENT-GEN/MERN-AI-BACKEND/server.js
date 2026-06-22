@@ -100,7 +100,7 @@ app.use(cookieParser());
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://your-frontend-url.onrender.com"
+    "https://effervescent-douhua-d7cc71.netlify.app"
   ],
   credentials: true,
 };
