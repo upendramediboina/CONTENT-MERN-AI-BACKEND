@@ -99,3 +99,43 @@ const logout = asyncHandler(async (req, res) => {
     message: "Logged out successfully",
   });
 });
+//------Profile-----
+const userProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req?.user?.id)
+    .select("-password")
+    .populate("payments")
+    .populate("contentHistory");
+
+  if (user) {
+    res.status(200).json({
+      status: "success",
+      user,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+//------Check user Auth Status-----
+const checkAuth = asyncHandler(async (req, res) => {
+  const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+
+  if (decoded) {
+    res.json({
+      isAuthenticated: true,
+    });
+  } else {
+    res.json({
+      isAuthenticated: false,
+    });
+  }
+});
+
+module.exports = {
+  register,
+  login,
+  logout,
+  userProfile,
+  checkAuth,
+};
